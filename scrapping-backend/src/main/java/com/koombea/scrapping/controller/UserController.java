@@ -24,12 +24,12 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         AppUser createdAppUser = userService.registerUser(appUser);
-        if(null != createdAppUser){
+        if (null != createdAppUser) {
             return ResponseEntity
                     .created(uriBuilder.path("/user/{id}").buildAndExpand(createdAppUser.getId()).toUri())
                     .headers(headers)
                     .body(createdAppUser);
-        }else{
+        } else {
             String errorMessage = "An error occurred while creating the user.";
             ErrorDetails.ErrorCode errorCode = ErrorDetails.ErrorCode.INTERNAL_ERROR; // You can define your custom error codes
             ErrorDetails errorDetails = new ErrorDetails(errorCode.getCode(), errorMessage);
@@ -40,9 +40,9 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> loginUser(@RequestBody AppUser appUser) {
         AppUser user = userService.login(appUser);
-        if(null != user){
+        if (null != user) {
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
-        }else{
+        } else {
             String errorMessage = "An error occurred while getting user info.";
             ErrorDetails.ErrorCode errorCode = ErrorDetails.ErrorCode.UNAUTHORIZED; // You can define your custom error codes
             ErrorDetails errorDetails = new ErrorDetails(errorCode.getCode(), errorMessage);
